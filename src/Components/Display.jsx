@@ -3,7 +3,7 @@ import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import '../Styles/Body.css';
 
-function Display({ data, userInputData }) {
+function Display({ data, userInputData,yourTotalInvested }) {
   const tableRef = useRef(null);
 
   const addWatermark = (pdf, text, interval) => {
@@ -69,6 +69,7 @@ function Display({ data, userInputData }) {
   return (
     <>
       <h2>Investment Table</h2>
+      <p>Your Actual Investment {yourTotalInvested}</p>
       <table ref={tableRef}>
         <thead>
           <tr>
