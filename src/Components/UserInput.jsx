@@ -41,7 +41,8 @@ function UserInput() {
     duration,
     inflation,
   };
-  
+      const yourTotalInvested=initial+(annual*duration)
+
   function calculateYearData(year, previousTotalInterest, previousFinalValue) {
     // Calculate total invested amount for the current year
     const totalInvested = year === 1 ? initial + annual : previousFinalValue + annual;
@@ -129,7 +130,7 @@ function UserInput() {
       </div>
 
       {/* Display component to show calculated values */}
-      {yearDataArray.length > 0 && <Display data={yearDataArray} userInputData={userInputData}/>}
+      {yearDataArray.length > 0 && <Display yourTotalInvested={yourTotalInvested} data={yearDataArray} userInputData={userInputData}/>}
     </>
   );
 }
