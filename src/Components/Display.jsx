@@ -18,52 +18,53 @@ function Display({ data, userInputData,yourTotalInvested }) {
       }
     }
   };
+const downloadPDF = () => {
+  if (tableRef.current) {
+    // Create a new jsPDF instance
+    const pdf = new jsPDF();
 
-  const downloadPDF = () => {
-    if (tableRef.current) {
-      // Create a new jsPDF instance
-      const pdf = new jsPDF();
-  
-      // Add watermark every 100 pixels
-      const watermarkText = 'Chinmaya';
-      const watermarkInterval = 40;
-  
-      addWatermark(pdf, watermarkText, watermarkInterval);
-  
-      // Set user input styling
-      pdf.setTextColor(47, 83, 155);
-      // Red color
-      pdf.setFontSize(18);
-      pdf.setFont('helvetica', 'bold'); // Bold and stylish font
-      pdf.text(`Initial Investment: ${userInputData.initial}`, 10, 40);
-      pdf.text(`Annual Investment: ${userInputData.annual}`, 10, 50);
-      pdf.text(`Expected: ${userInputData.expected}%`, 10, 60);
-      pdf.text(`Duration: ${userInputData.duration} year`, 10, 70);
-      pdf.text(`Inflation: ${userInputData.inflation}%`, 10, 80);
-      pdf.setTextColor(0, 0, 0); // Reset text color to black
-      pdf.setFont('normal'); // Reset font style
-  
-      // Add the investment table content to the PDF
-      pdf.text('Investment Table', 10, 100);
-      pdf.autoTable({
-        head: [
-          ['Year', 'Investment Value', 'Interest (year)', 'Total Interest', 'Invested Capital', 'Without Inflation'],
-        ],
-        body: data.map((yearData) => [
-          yearData.year,
-          yearData.investmentValue,
-          yearData.interest,
-          yearData.totalInterest,
-          yearData.investedCapital,
-          yearData.inflationAdjustedFinalValue, // Assuming this field corresponds to "Without Inflation"
-        ]),
-        startY: 110,
-      });
-  
-      // Save the PDF
-      pdf.save('MoneyMatter.pdf');
-    }
-  };
+    // Add watermark every 100 pixels
+    const watermarkText = 'Chinmaya';
+    const watermarkInterval = 40;
+
+    addWatermark(pdf, watermarkText, watermarkInterval);
+
+    // Set user input styling
+    pdf.setTextColor(47, 83, 155);
+    // Red color
+    pdf.setFontSize(18);
+    pdf.setFont('helvetica', 'bold'); // Bold and stylish font
+    pdf.text(`Initial Investment: ${userInputData.initial}`, 10, 40);
+    pdf.text(`Annual Investment: ${userInputData.annual}`, 10, 50);
+    pdf.text(`Expected: ${userInputData.expected}%`, 10, 60);
+    pdf.text(`Duration: ${userInputData.duration} year`, 10, 70);
+    pdf.text(`Inflation: ${userInputData.inflation}%`, 10, 80);
+    pdf.text(`Your Actual Investment: ${yourTotalInvested}`, 10, 90);
+    pdf.setTextColor(0, 0, 0); // Reset text color to black
+    pdf.setFont('normal'); // Reset font style
+
+    // Add the investment table content to the PDF
+    pdf.text('Investment Table', 10, 110);
+    pdf.autoTable({
+      head: [
+        ['Year', 'Investment Value', 'Interest (year)', 'Total Interest', 'Invested Capital', 'Without Inflation'],
+      ],
+      body: data.map((yearData) => [
+        yearData.year,
+        yearData.investmentValue,
+        yearData.interest,
+        yearData.totalInterest,
+        yearData.investedCapital,
+        yearData.inflationAdjustedFinalValue, // Assuming this field corresponds to "Without Inflation"
+      ]),
+      startY: 120,
+    });
+
+    // Save the PDF
+    pdf.save('MoneyMatter.pdf');
+  }
+};
+
   
 
   return (
